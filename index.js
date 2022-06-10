@@ -1,11 +1,13 @@
 // this scripts get the price of currencies from chainlink
 // logs it to the console
 import Web3 from 'https://deno.land/x/web3/mod.ts'
+import { config } from "https://deno.land/x/dotenv/mod.ts";
 import { link } from "./link.js";
 import {coins} from "./coinList.js";
-// connect to the evm chain
-let url =''
-const web3 = new Web3(new Web3.providers.HttpProvider(url));
+
+// read env file
+let {URL} = await config()
+const web3 = new Web3(new Web3.providers.HttpProvider(URL));
 
 const getPrices = async () => {
     console.log('Getting prices...')
