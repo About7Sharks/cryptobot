@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bot Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
+  </head>
+  <body>
+    <script type="module">
+      import chartkick from "https://cdn.skypack.dev/chartkick";
+      // read data from ./data.json
+      let { data } = await (await fetch("./data.json")).json();
+      let coins = data[0].data.map(({ coin }) => coin);
+      let list = {};
+      coins.map((coin) => (list[coin] = {}));
+      data.map(({ data, time }) => {
+        return coins.map((coin, i) => {
+          list[coin][time.date] = data[i].price * 1;
+        });
+      });
+      const createCharts = async () => {
+        coins.map((i) => {
+          // skip spell & tesla
+          if (i === "Spell" || i === "Tesla") {
+            return;
+          }
+          // create a div element to show the chart
+          let div = document.createElement("div");
+          div.id = i;
+          div.style.height = "300px";
+          div.style.marginBottom = "20px";
+          // append
+          document.body.appendChild(div);
+          // get the min and max value of the data
+          let options = {
+            min: (Math.min(...Object.values(list[i])) * 1.02).toFixed(2),
+            max: (Math.max(...Object.values(list[i])) * 0.98).toFixed(2),
+            xtitle: i,
+            ytitle: "Price",
+            loading: "Loading...",
+            prefix: "$",
+            label: i,
+            download: { filename: `${i}-chart` },
+            code: true
+
+          };
+          // create a chart
+          new chartkick.AreaChart(i, list[i], options);
+        });
+      };
+      createCharts();
+    </script>
+    <h1>Chainlink Charts</h1>
+  </body>
+</html>
