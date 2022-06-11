@@ -7,6 +7,13 @@
     <title>Bot Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
+    <!-- <style>
+      body {
+        /* dark background */
+        background-color: #1b1a1a;
+        color: rgb(255, 255, 255);
+      }
+    </style> -->
   </head>
   <body>
     <script type="module">
@@ -44,8 +51,7 @@
             prefix: "$",
             label: i,
             download: { filename: `${i}-chart` },
-            code: true
-
+            code: true,
           };
           // create a chart
           new chartkick.AreaChart(i, list[i], options);
