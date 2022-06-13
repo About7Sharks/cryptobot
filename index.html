@@ -7,13 +7,6 @@
     <title>Bot Chart</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@2.0.0/dist/chartjs-adapter-date-fns.bundle.js"></script>
-    <!-- <style>
-      body {
-        /* dark background */
-        background-color: #1b1a1a;
-        color: rgb(255, 255, 255);
-      }
-    </style> -->
   </head>
   <body>
     <script type="module">
@@ -43,8 +36,8 @@
           document.body.appendChild(div);
           // get the min and max value of the data
           let options = {
-            min: (Math.min(...Object.values(list[i])) * 1.02).toFixed(2),
-            max: (Math.max(...Object.values(list[i])) * 0.98).toFixed(2),
+            min: Math.min(...Object.values(list[i])),
+            max: Math.max(...Object.values(list[i])),
             xtitle: i,
             ytitle: "Price",
             loading: "Loading...",
